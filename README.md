@@ -1,7 +1,7 @@
 OLR Track (OTrack) began as a way to track convective Outgoing Longwave
 Radiation (OLR) anomalies related to the Madden-Julian Oscillation (MJO).
 The original version (preserved in this repo as OLR_Tracker.py) was used
-in my 2022 paper "The Role of Surface Fluxes in MJO Propagation Through
+in my 2023 paper "The Role of Surface Fluxes in MJO Propagation Through
 The Maritime Continent". 
 
 Since then I have been working on improving the core functionality and
@@ -21,26 +21,3 @@ map you have created. The code assumes a format of (time,lat,lon) The code will
 then return a dictionary of Blob Objects (I like to call them Blobjects) which
 contain position, velocity, and temporal data for all Blobs tracked in your
 binary map.
-
-
-MIT License
-
-Copyright (c) [2023] [Justin Hudson]
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
