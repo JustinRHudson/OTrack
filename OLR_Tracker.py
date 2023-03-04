@@ -1,6 +1,6 @@
 
 '''
-    Blob_tracker.py is designed to identify and track regions highlighted in
+    OLR_tracker.py is designed to identify and track regions highlighted in
     binary maps. It was originally designed to track the Madden-Julian
     Oscillation (MJO) in NOAA Interpolated OLR but can theoretically be used
     to track anything as long as two conditions are met.
@@ -13,7 +13,7 @@
         1. bin_map this is array of binary maps you want to track the designated
            object in. The tracking algorithm assumes a specific orientiation,
            namely (time or Z, lat (y), lon(x)) and for best results binary maps
-           should be on this form
+           should be of this form
         2. min_blob_size the minimum size you expect a tracked object to be on
            the binary maps you input as an integer. Must be greater than or
            equal to 1. Setting this parameter to a larger value will improve the
@@ -507,10 +507,6 @@ def blob_uniter(blob_master, rank_match = False):
                         cent_ind = M
                 J = matching_inds[cent_ind]
             elif rank_match == True:
-                '''
-                    NEED TO CLEAN THIS SECTION UP AND PUT WHAT I CAN INTO
-                    FUNCTIONS BECAUSE RN IT IS MEGA GROSS!
-                '''
                 rank_sums = np.zeros(len(matching_inds))
                 dists = []
                 angle_dif = []
