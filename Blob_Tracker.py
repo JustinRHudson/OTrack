@@ -54,19 +54,18 @@ import numpy as np
 
 class Blob:
     def __init__(self,points,init_frame):
-        self.points = sorted(list(set(points)))
-        xps = []
-        yps = []
-        for i in range(len(points)):
-            xps.append(points[i][0])
-            yps.append(points[i][1])
-        self.xpoints = xps
-        self.ypoints = yps
+        self.points = sorted(list(set(points))) #this removes any duplicate points I found and sorts them
+        self.xpoints = [pt[0] for pt in points] #list generators to assign the x,y coordinates of the points to a list
+        self.ypoints = [pt[1] for pt in points]
+        #place holders for the centroid x position (cx), centroid y position (cy)
         self.cx = 0
         self.cy = 0
+        #place holders for the centroid x velocity (vx), and centroid y velocity (vy)
         self.vx = 0
         self.vy = 0
         #store old values here
+        #this is basically a record of where every tracked object has been
+        #Can fill in the values for the initial time step at creation
         self.old_points = [self.points]
         self.old_xp = [self.xpoints]
         self.old_yp = [self.ypoints]
@@ -74,22 +73,19 @@ class Blob:
         self.old_vy = [0]
         self.old_cx = []
         self.old_cy = []
-        self.centroid_calc()
+        self.centroid_calc() #this gives vales to self.cx,self.cy,self.old_cx, and self.old_cy
+        #If I am unable to connect a tracked blob to continue it declare it as dead and to be ignored
+        #for future time steps
         self.dead = False
         #an array containing the index number of frames the blob existed on
         self.frames = [init_frame]
 
     def centroid_calc(self):
-        x_vals = self.xpoints
-        y_vals = self.ypoints
-
-        x_cent = np.mean(x_vals)
-        y_cent = np.mean(y_vals)
-        self.cx = x_cent
-        self.cy = y_cent
-        self.old_cx.append(x_cent)
-        self.old_cy.append(y_cent)
-        if len(self.old_cx) > 1:
+        self.cx = np.mean(self.xpoints)
+        self.cy = np.mean(self.ypoints)
+        self.old_cx.append(self.cx)
+        self.old_cy.append(self.cy)
+        if len(self.old_cx) > 1: #if this isn't the initial time step get the velocity
             self.vx = self.old_cx[-1] - self.old_cx[-2]
             self.vy = self.old_cy[-1] - self.old_cy[-2]
             self.old_vx.append(self.vx)
@@ -98,13 +94,9 @@ class Blob:
 
 
     def update(self,new_ps,frame_num):
-        self.points = sorted(list(set(new_ps)))
-        xps = []
-        yps = []
-        for i in range(len(new_ps)):
-            xps.append(new_ps[i][0])
-            yps.append(new_ps[i][1])
-
+        self.points = sorted(list(set(new_ps))) #remove any duplicate points
+        xps = [new_pt[0] for new_pt in new_ps]
+        yps = [new_pt[1] for new_pt in new_ps]
         self.xpoints = xps
         self.ypoints = yps
         self.old_xp.append(self.xpoints)
@@ -172,7 +164,7 @@ class Blob:
         nocy = [] #new old centroid, y-position
         nf = [] #new frames
 
-        #loop through flames to find duplicates that appear AFTER the original
+        #loop through frames to find duplicates that appear AFTER the original
         for i in range(len(self.frames)):
             dup_count = 0
             if i != (len(self.frames) - 1):
@@ -217,7 +209,7 @@ def connect_8(spx,spy,array):
     #given the starting x and y of a pixel search for connected pixels to define the blob
     con_x = []
     con_y = []
-    #I think I gotta have these 8 conditionals, yuck
+    #I think I gotta have these 8 conditionals
     if spx+1 < array.shape[0]:
         if array[spx+1,spy] == 1:
             con_x.append(spx+1)
