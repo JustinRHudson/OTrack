@@ -1,47 +1,3 @@
-
-'''
-    Blob_tracker.py is designed to identify and track regions highlighted in
-    binary maps. It was originally designed to track the Madden-Julian
-    Oscillation (MJO) in NOAA Interpolated OLR but can theoretically be used
-    to track anything as long as two conditions are met.
-        1. The binary maps fed into the tracking algorithm highlight the
-           phenomena/object one wants to track
-        2. The speed of the object relative to its size on the binary maps
-           is small enough such that on subsequent frames
-
-    The main tracking function blob_track takes 3 inputs:
-        1. bin_map this is array of binary maps you want to track the designated
-           object in. The tracking algorithm assumes a specific orientiation,
-           namely (time or Z, lat (y), lon(x)) and for best results binary maps
-           should be on this form
-        2. min_blob_size the minimum size you expect a tracked object to be on
-           the binary maps you input as an integer. Must be greater than or
-           equal to 1. Setting this parameter to a larger value will improve the
-           speed of the algorithm.
-        3. rank_match, set to False by default, is a boolean variable. By default
-           tries to match potential continuations of tracked objects based on
-           distance (e.g. An animal that temporarily runs behind a tree then
-           reappears on the other side). It is also possible to match objects
-           based on the direction of travel. If there are multiple possible
-           continuations of a tracked object instead of choosing the closest
-           possible match rank_match will rank them by distance and direction
-           of propagation. The ranking is equal between the two categories.
-           If two objects tie in the ranking system, e.g an object is ranked 1st
-           for distance and 2nd for angle and another is ranked 1st for angle
-           and 2nd distance similarities in propagation speed (velocity) will
-           be used to break the tie.
-
-    The output of the tracking algorithm is a Python Dictionary of tracked
-    objects. The algorithm is agnostic of tracked object properties other than
-    size and when comparing possible continuations to increase its
-    generalizability. Because of this the output dictionary should be filtered
-    using where tracked objects start, end, propagate, how fast they move, the
-    direction in which they move, size, angle of propagation and anything that
-    can be calculated from those quantities. With this one should be able to
-    refine the results to the exact objects one wishes to identify.
-'''
-
-
 '''
     IMPORTS GO HERE
 '''
@@ -578,6 +534,13 @@ def blob_track(bin_map, min_blob_size):
     #run blob_uniter over the whole thing
     blob_master = blob_uniter(blob_master, rank_match = True)
     #return the master blob dictionary
-    for i in range(len(blob_master)):
+    for i in range(len(blob_master)):   
         blob_master[i].frame_merge()
     return blob_master
+
+if __name__ == "__main__":
+    print('Blob_Tracker.py is an object tracking algorithm meant to record the movement \n')
+    print('of distinct objects between frames on a binary map. It is capable of handling \n')
+    print('objects that temporarily disappear, merge, or overlap. \n')
+    print('Originally developed by Justin Hudson for his Master\'s Thesis development is \n')
+    print('still maintained at https://github.com/JustinRHudson/OTrack.')
