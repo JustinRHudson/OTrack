@@ -18,7 +18,7 @@
            the binary maps you input as an integer. Must be greater than or
            equal to 1. Setting this parameter to a larger value will improve the
            speed of the algorithm.
-        3. rank_match, set to False by default, is a boolean variable. By default
+        3. rank_match, set to True by default, is a boolean variable. By default
            tries to match potential continuations of tracked objects based on
            distance (e.g. An animal that temporarily runs behind a tree then
            reappears on the other side). It is also possible to match objects
